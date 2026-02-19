@@ -1,6 +1,6 @@
 {
   "name": "smartplan",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Intelligent planning that automatically chooses the right mode. One command for everything - small tasks get 3-file plans, large projects get feature lists.",
   "author": {
     "name": "bobo",

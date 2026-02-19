@@ -1,6 +1,6 @@
 {
   "name": "smartplan",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Intelligent planning that automatically chooses the right mode. One command for everything - small tasks get 3-file plans, large projects get feature lists.",
   "author": {
     "name": "bobo",
@@ -14,7 +14,7 @@
       "name": "smartplan",
       "source": "./",
       "description": "Main skill with automatic mode selection - session-based for small tasks, feature-based for large projects.",
-      "version": "3.0.0"
+      "version": "4.0.0"
     }
   ]
 }
