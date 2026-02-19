@@ -41,15 +41,15 @@ That's it. SmartPlan intelligently handles:
 
 | Situation | What SmartPlan Does |
 |-----------|---------------------|
-| **New small task** | Creates 3-file plan |
-| **New large project** | Creates feature list with 50-200 items |
-| **Existing project** | Auto-detects and continues work |
+| **New small task** | Creates 3-file plan (session mode) |
+| **New large project** | Initializer Agent creates feature list with 10-200 items |
+| **Existing project** | Coding Agent continues with next feature |
 
 ### How It Works
 
 ```
 ┌─────────────────┐
-│   /plan         │
+│      /plan      │
 └────────┬────────┘
          │
          ▼
@@ -73,8 +73,8 @@ That's it. SmartPlan intelligently handles:
     │      │             │
     ▼      ▼             ▼
 ┌────────┐ ┌────────┐ ┌──────────┐
-│Resume  │ │Feature │ │  Session │
-│project │ │  list  │ │   plan   │
+│Coding  │ │Initial │ │ Session  │
+│Agent   │ │  izer  │ │   Plan   │
 └────────┘ └────────┘ └──────────┘
 ```
 
@@ -93,10 +93,18 @@ Creates:
 
 When: Multi-file applications, platforms, 10+ features
 
-Creates:
-- `feature_list.json` — Track all features with pass/fail status
-- `init.sh` — Project management (dev/test/stop)
-- `claude-progress.txt` — Session history and progress
+Uses **Dual-Agent Architecture:**
+
+**Initializer Agent** (first time):
+- Creates `feature_list.json` — Enhanced with test commands, status, dependencies
+- Creates `init.sh` — Project management (dev/test/stop)
+- Creates `claude-progress.txt` — Session history and progress
+
+**Coding Agent** (subsequent sessions):
+- Context recovery sequence (git log, progress display)
+- Implements ONE feature at a time
+- Tests and marks `status: "passing"` only after verification
+- Commits after each feature
 
 ## The Core Principle
 

@@ -119,7 +119,7 @@ This diagram shows how the three files work together and how hooks interact with
 | Hook | When It Fires | What It Does |
 |------|---------------|--------------|
 | **SessionStart** | When Claude Code session begins | Notifies skill is ready |
-| **PreToolUse** | Before Write/Edit/Bash operations | Reads `task_plan.md` to refresh goals |
+| **PreToolUse** | Before Write/Edit/Bash operations | Runs context recovery (pwd, git log, progress) |
 | **PostToolUse** | After Write/Edit operations | Reminds to update phase status |
 | **Stop** | When Claude tries to stop | Verifies all phases are complete |
 

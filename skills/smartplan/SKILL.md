@@ -3,7 +3,7 @@ name: smartplan
 description: Intelligent planning that automatically chooses the right mode. Creates 3-file plans (task_plan.md, findings.md, progress.md) for focused tasks, or feature lists (feature_list.json) for large projects. One command /plan handles everything.
 user-invocable: true
 metadata:
-  version: "3.0.0"
+  version: "4.0.0"
   license: MIT
   compatibility: Claude Code 1.0+
 allowed-tools:
@@ -15,10 +15,11 @@ allowed-tools:
   - Grep
 hooks:
   PreToolUse:
-    - matcher: "Write|Edit|Bash|Read|Glob|Grep"
+    - matcher: "Write|Edit|Bash"
       hooks:
         - type: command
-          command: "cat task_plan.md 2>/dev/null | head -30 || true"
+          command: |
+            "${CLAUDE_PLUGIN_ROOT:-./skills/smartplan}/scripts/recover-context.sh" 2>/dev/null || true
   PostToolUse:
     - matcher: "Write|Edit"
       hooks:

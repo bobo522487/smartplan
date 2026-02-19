@@ -20,9 +20,17 @@ description: "Start or continue any task - automatically chooses the right plann
 test -f feature_list.json && echo "PROJECT_EXISTS" || echo "NEW_TASK"
 ```
 
-### If feature_list.json exists → CONTINUE MODE
+### If feature_list.json exists → USE CODING AGENT
 
-Skip to **Step 4: Continue Existing Project**
+**STOP.** Do NOT proceed with this file.
+
+Instead, read and follow `commands/continue.md` (the Coding Agent prompt).
+
+The Coding Agent will:
+1. Recover context using the localization sequence
+2. Start development environment
+3. Select and implement ONE feature at a time
+4. Test, commit, and repeat
 
 ### If not found → NEW PROJECT → Go to **Step 2**
 
@@ -68,52 +76,19 @@ Evaluate the task based on these indicators:
 
 ### If FEATURE MODE selected:
 
-Tell the user:
-```
-📊 This looks like a large project. I'll use feature-based planning.
+**STOP.** Do NOT proceed with this file.
 
-Creating feature list and project files...
-```
+Instead, read and follow `commands/initialize.md` (the Initializer Agent prompt).
 
-Then:
+The Initializer Agent will:
+1. Gather project requirements
+2. Determine appropriate feature count based on project scale
+3. Create `feature_list.json` with enhanced structure
+4. Create `init.sh` and `claude-progress.txt`
+5. Make initial git commit
+6. Hand off to Coding Agent
 
-1. **Ask for project details** if not provided:
-   - What does the project do?
-   - Key features and requirements
-   - Target users
-   - Technical constraints
-
-2. **Create feature_list.json**:
-   - Break down into 50-200 features for large projects
-   - Mark all `"passes": false` initially
-   - Include functional, UI, infrastructure, testing features
-   - Use descriptive IDs (e.g., "auth-login", "user-profile")
-
-3. **Create init.sh** with commands for:
-   - `./init.sh dev` - Start development server
-   - `./init.sh test` - Run tests
-   - `./init.sh stop` - Stop services
-
-4. **Create claude-progress.txt**:
-   ```txt
-   # Claude Progress Log
-   ## Session History
-   | Date | Session ID | Features Completed | Notes |
-   |------|------------|-------------------|-------|
-   | YYYY-MM-DD | initial | 0 | Project initialized |
-
-   ## Current Focus
-   - Working on: feature-001
-   - Next up: feature-002
-   ```
-
-5. **Make initial git commit**:
-   ```bash
-   git add feature_list.json init.sh claude-progress.txt
-   git commit -m "chore: initialize project with feature list"
-   ```
-
-6. **Start first feature** → Go to **Step 5**
+After initialization is complete, the user will run `/plan` again (which will route to `/continue.md`).
 
 ### If SESSION MODE selected:
 
@@ -136,73 +111,18 @@ Break the task into 3-7 phases and set Phase 1 to `in_progress`.
 
 ## Step 4: Continue Existing Project
 
-When `feature_list.json` already exists:
+**This section is no longer used.** When `feature_list.json` exists, the `/plan` command now routes directly to `commands/continue.md`.
 
-1. **Read progress log** (`claude-progress.txt`) to see what was done last session
-
-2. **Check git history**:
-   ```bash
-   git log --oneline -20
-   ```
-
-3. **Read feature list** (`feature_list.json`) to find incomplete features
-
-4. **Start development server**:
-   ```bash
-   ./init.sh dev
-   ```
-
-5. **Run smoke tests** to verify system works
-
-Tell the user:
-```
-🔄 Resuming project: [project name]
-Last session: [date]
-Features completed: [count]/[total]
-Next feature: [feature-id] - [description]
-```
-
-Then go to **Step 5**
+See the **Coding Agent** in `commands/continue.md` for:
+- Context recovery sequence
+- Feature selection logic
+- Implementation workflow
+- Testing and verification
+- Progress tracking
 
 ---
 
-## Step 5: Work on Features (Feature Mode)
-
-For EACH feature:
-
-### 1. Choose ONE Feature
-- Find a feature with `"passes": false`
-- Prefer `priority: "high"` first
-- Consider dependencies
-
-### 2. Implement the Feature
-- Write code incrementally
-- Test as you go
-
-### 3. Test End-to-End
-- Verify against the `steps` array in feature_list.json
-- ALL steps must pass
-
-### 4. Mark as Passing
-```json
-{
-  "id": "feature-001",
-  "passes": true  // Only after testing!
-}
-```
-
-### 5. Git Commit
-```bash
-git add .
-git commit -m "feat: implement feature-001 - description"
-```
-
-### 6. Update Progress Log
-```txt
-| YYYY-MM-DD | session-id | feature-001 | Feature completed |
-```
-
-### 7. Repeat for next feature
+## Legacy Session Mode (for small tasks)
 
 ---
 

@@ -1,5 +1,6 @@
 {
   "project": "Project Name",
+  "version": "1.0.0",
   "created": "YYYY-MM-DD",
   "description": "Brief description of the project goals and purpose.",
   "features": [
@@ -12,8 +13,10 @@
         "Step 2: Specific verification step",
         "Step 3: Specific verification step"
       ],
-      "passes": false,
+      "test_command": "npm run test -- --grep 'feature-001'",
+      "status": "pending",
       "priority": "high",
+      "dependencies": [],
       "notes": ""
     }
   ]
