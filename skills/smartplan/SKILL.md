@@ -29,7 +29,7 @@ hooks:
     - hooks:
         - type: command
           command: |
-            "${CLAUDE_PLUGIN_ROOT:-./skills/planning-with-files}/scripts/check-complete-wrapper.sh" || true
+            "${CLAUDE_PLUGIN_ROOT:-./skills/smartplan}/scripts/check-complete-wrapper.sh" 2>/dev/null || true
 ---
 
 # Planning with Files
