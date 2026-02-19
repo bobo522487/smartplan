@@ -1,15 +1,20 @@
 {
-  "name": "planning-with-files",
-  "owner": {
-    "name": "Ahmad Othman Ammar Adi",
-    "url": "https://github.com/OthmanAdi"
+  "name": "smartplan",
+  "version": "3.0.0",
+  "description": "Intelligent planning that automatically chooses the right mode. One command for everything - small tasks get 3-file plans, large projects get feature lists.",
+  "author": {
+    "name": "bobo",
+    "username": "bobo522487",
+    "url": "https://github.com/bobo522487"
   },
+  "repository": "https://github.com/bobo522487/smartplan",
+  "license": "MIT",
   "plugins": [
     {
-      "name": "planning-with-files",
+      "name": "smartplan",
       "source": "./",
-      "description": "Manus-style persistent markdown files for planning, progress tracking, and knowledge storage. Now with hooks integration.",
-      "version": "2.0.0"
+      "description": "Main skill with automatic mode selection - session-based for small tasks, feature-based for large projects.",
+      "version": "3.0.0"
     }
   ]
 }

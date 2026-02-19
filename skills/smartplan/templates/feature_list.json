@@ -1,0 +1,20 @@
+{
+  "project": "Project Name",
+  "created": "YYYY-MM-DD",
+  "description": "Brief description of the project goals and purpose.",
+  "features": [
+    {
+      "id": "feature-001",
+      "category": "functional",
+      "description": "Brief description of what the feature does",
+      "steps": [
+        "Step 1: Specific verification step",
+        "Step 2: Specific verification step",
+        "Step 3: Specific verification step"
+      ],
+      "passes": false,
+      "priority": "high",
+      "notes": ""
+    }
+  ]
+}

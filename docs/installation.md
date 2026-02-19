@@ -1,12 +1,12 @@
 # Installation Guide
 
-Complete installation instructions for planning-with-files.
+Complete installation instructions for SmartPlan.
 
 ## Quick Install (Recommended)
 
 ```bash
-/plugin marketplace add OthmanAdi/planning-with-files
-/plugin install planning-with-files@planning-with-files
+/plugin marketplace add bobo522487/smartplan
+/plugin install smartplan@smartplan
 ```
 
 That's it! The skill is now active.
@@ -20,8 +20,8 @@ That's it! The skill is now active.
 Install directly using the Claude Code CLI:
 
 ```bash
-/plugin marketplace add OthmanAdi/planning-with-files
-/plugin install planning-with-files@planning-with-files
+/plugin marketplace add bobo522487/smartplan
+/plugin install smartplan@smartplan
 ```
 
 **Advantages:**
@@ -39,20 +39,20 @@ Clone or copy this repository into your project's `.claude/plugins/` directory:
 
 ```bash
 mkdir -p .claude/plugins
-git clone https://github.com/OthmanAdi/planning-with-files.git .claude/plugins/planning-with-files
+git clone https://github.com/bobo522487/smartplan.git .claude/plugins/smartplan
 ```
 
 #### Option B: Add as git submodule
 
 ```bash
-git submodule add https://github.com/OthmanAdi/planning-with-files.git .claude/plugins/planning-with-files
+git submodule add https://github.com/bobo522487/smartplan.git .claude/plugins/smartplan
 ```
 
 #### Option C: Use --plugin-dir flag
 
 ```bash
-git clone https://github.com/OthmanAdi/planning-with-files.git
-claude --plugin-dir ./planning-with-files
+git clone https://github.com/bobo522487/smartplan.git
+claude --plugin-dir ./smartplan
 ```
 
 ---
@@ -62,8 +62,8 @@ claude --plugin-dir ./planning-with-files
 If you only want the skill without the full plugin structure:
 
 ```bash
-git clone https://github.com/OthmanAdi/planning-with-files.git
-cp -r planning-with-files/skills/* ~/.claude/skills/
+git clone https://github.com/bobo522487/smartplan.git
+cp -r smartplan/skills/* ~/.claude/skills/
 ```
 
 ---
@@ -73,10 +73,10 @@ cp -r planning-with-files/skills/* ~/.claude/skills/
 Extract just the skill directly into your current directory:
 
 ```bash
-curl -L https://github.com/OthmanAdi/planning-with-files/archive/master.tar.gz | tar -xzv --strip-components=2 "planning-with-files-master/skills/planning-with-files"
+curl -L https://github.com/bobo522487/smartplan/archive/master.tar.gz | tar -xzv --strip-components=2 "smartplan-master/skills/smartplan"
 ```
 
-Then move `planning-with-files/` to `~/.claude/skills/`.
+Then move `smartplan/` to `~/.claude/skills/`.
 
 ---
 
@@ -85,8 +85,8 @@ Then move `planning-with-files/` to `~/.claude/skills/`.
 After installation, verify the skill is loaded:
 
 1. Start a new Claude Code session
-2. You should see: `[planning-with-files] Ready. Auto-activates for complex tasks, or invoke manually with /planning-with-files`
-3. Or type `/planning-with-files` to manually invoke
+2. Type `/plan` with a task description
+3. The AI should create planning files automatically
 
 ---
 
@@ -95,20 +95,20 @@ After installation, verify the skill is loaded:
 ### Plugin Installation
 
 ```bash
-/plugin update planning-with-files@planning-with-files
+/plugin update smartplan@smartplan
 ```
 
 ### Manual Installation
 
 ```bash
-cd .claude/plugins/planning-with-files
+cd .claude/plugins/smartplan
 git pull origin master
 ```
 
 ### Skills Only
 
 ```bash
-cd ~/.claude/skills/planning-with-files
+cd ~/.claude/skills/smartplan
 git pull origin master
 ```
 
@@ -119,19 +119,19 @@ git pull origin master
 ### Plugin
 
 ```bash
-/plugin uninstall planning-with-files@planning-with-files
+/plugin uninstall smartplan@smartplan
 ```
 
 ### Manual
 
 ```bash
-rm -rf .claude/plugins/planning-with-files
+rm -rf .claude/plugins/smartplan
 ```
 
 ### Skills Only
 
 ```bash
-rm -rf ~/.claude/skills/planning-with-files
+rm -rf ~/.claude/skills/smartplan
 ```
 
 ---
@@ -147,22 +147,14 @@ rm -rf ~/.claude/skills/planning-with-files
 
 ### Windows
 
-See [docs/windows.md](windows.md) for Windows-specific installation notes.
+The skill works on Windows using PowerShell or Git Bash. The Stop hook automatically detects your environment and uses the appropriate script (`.ps1` or `.sh`).
 
-### Cursor
+### Other AI Assistants
 
-See [docs/cursor.md](cursor.md) for Cursor IDE installation.
-
-### Codex
-
-See [docs/codex.md](codex.md) for Codex IDE installation.
-
-### OpenCode
-
-See [docs/opencode.md](opencode.md) for OpenCode IDE installation.
+SmartPlan is designed for Claude Code but the file-based planning patterns can be used with any AI coding assistant.
 
 ---
 
 ## Need Help?
 
-If installation fails, check [docs/troubleshooting.md](troubleshooting.md) or open an issue at [github.com/OthmanAdi/planning-with-files/issues](https://github.com/OthmanAdi/planning-with-files/issues).
+If installation fails, open an issue at [github.com/bobo522487/smartplan/issues](https://github.com/bobo522487/smartplan/issues).

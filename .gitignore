@@ -25,7 +25,8 @@ notes.md
 clawdhub-publish/
 
 # Claude session files
-.claude/
+.claude/settings.local.json
+.claude/settings.json
 
 # Keep the skill folder clean
 *.log

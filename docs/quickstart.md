@@ -1,163 +1,125 @@
 # Quick Start Guide
 
-Follow these 5 steps to use the planning-with-files pattern.
+Just use `/plan` — it handles everything automatically.
 
 ---
 
-## Step 1: Invoke the Skill and Describe Your Task
+## How /plan Works
 
-**When:** Before starting any work on a complex task
+```
+/plan
+   │
+   ├─→ No existing project?
+   │     └─→ Analyzes your task
+   │          ├─→ Small task? → Creates 3-file plan
+   │          └─→ Large project? → Creates feature list
+   │
+   └─→ Existing project found?
+         └─→ Continues where you left off
+```
 
-**Action:** Invoke the skill (e.g., `/plan` or `/planning-with-files:start`) and describe what you want to accomplish. The AI will create all three planning files in your project directory:
+---
 
-- `task_plan.md` — Phases and progress tracking
-- `findings.md` — Research and discoveries
-- `progress.md` — Session log and test results
+## Step 1: Run /plan
 
-If you invoke the skill without a task description, the AI will ask you what you'd like to plan.
+Simply type:
 
-**Manual alternative:** If you prefer to create files yourself:
+```
+/plan Your task description here
+```
+
+The AI will automatically:
+1. Check if you have an existing project (`feature_list.json`)
+2. If not, analyze your task complexity
+3. Create the appropriate planning files
+
+### Examples:
+
 ```bash
-# Use the init script
-./scripts/init-session.sh
-# Then fill in the Goal section in task_plan.md
+# Small task → automatically uses session mode
+/plan Fix the login bug
+
+# Large project → automatically uses feature mode
+/plan Build an e-commerce platform
+
+# Continue existing project → auto-detects
+/plan
 ```
 
 ---
 
-## Step 2: Plan Your Phases
+## Step 2: Follow Your Plan
 
-**When:** Right after creating the files
+### For Session Mode (3 files)
 
-**Action:** Break your task into 3-7 phases in `task_plan.md`
+The AI creates:
+- `task_plan.md` — Your phases and progress
+- `findings.md` — Research and discoveries
+- `progress.md` — Session log
 
-**Example:**
-```markdown
-### Phase 1: Requirements & Discovery
-- [ ] Understand user intent
-- [ ] Research existing solutions
-- **Status:** in_progress
+Work through your phases, updating status as you go.
 
-### Phase 2: Implementation
-- [ ] Write core code
-- **Status:** pending
-```
+### For Feature Mode (feature list)
 
-**Update:**
-- `task_plan.md`: Define your phases
-- `progress.md`: Note that planning is complete
+The AI creates:
+- `feature_list.json` — All features with pass/fail
+- `init.sh` — Project management commands
+- `claude-progress.txt` — Session history
 
----
-
-## Step 3: Work and Document
-
-**When:** Throughout the task
-
-**Action:** As you work, update files:
-
-| What Happens | Which File to Update | What to Add |
-|--------------|---------------------|-------------|
-| You research something | `findings.md` | Add to "Research Findings" |
-| You view 2 browser/search results | `findings.md` | **MUST update** (2-Action Rule) |
-| You make a technical decision | `findings.md` | Add to "Technical Decisions" with rationale |
-| You complete a phase | `task_plan.md` | Change status: `in_progress` → `complete` |
-| You complete a phase | `progress.md` | Log actions taken, files modified |
-| An error occurs | `task_plan.md` | Add to "Errors Encountered" table |
-| An error occurs | `progress.md` | Add to "Error Log" with timestamp |
-
-**Example workflow:**
-```
-1. Research → Update findings.md
-2. Research → Update findings.md (2nd time - MUST update now!)
-3. Make decision → Update findings.md "Technical Decisions"
-4. Implement code → Update progress.md "Actions taken"
-5. Complete phase → Update task_plan.md status to "complete"
-6. Complete phase → Update progress.md with phase summary
-```
+Work on ONE feature at a time. The AI will:
+1. Pick the next high-priority feature
+2. Implement and test it
+3. Mark it as passing
+4. Commit to git
+5. Move to the next feature
 
 ---
 
-## Step 4: Re-read Before Decisions
+## Step 3: Continue Next Session
 
-**When:** Before making major decisions (automatic with hooks in Claude Code)
+Just run `/plan` again.
 
-**Action:** The PreToolUse hook automatically reads `task_plan.md` before Write/Edit/Bash operations
-
-**Manual reminder (if not using hooks):** Before important choices, read `task_plan.md` to refresh your goals
-
-**Why:** After many tool calls, original goals can be forgotten. Re-reading brings them back into attention.
-
----
-
-## Step 5: Complete and Verify
-
-**When:** When you think the task is done
-
-**Action:** Verify completion:
-
-1. **Check `task_plan.md`**: All phases should have `**Status:** complete`
-2. **Check `progress.md`**: All phases should be logged with actions taken
-3. **Run completion check** (if using hooks, this happens automatically):
-   ```bash
-   ./scripts/check-complete.sh
-   ```
-
-**If not complete:** The Stop hook (or script) will prevent stopping. Continue working until all phases are done.
-
-**If complete:** Deliver your work! All three planning files document your process.
+If `feature_list.json` exists, the AI will:
+- Read your progress log
+- Check git history
+- Start where you left off
 
 ---
 
-## Quick Reference: When to Update Which File
+## Override Automatic Mode
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  task_plan.md                                            │
-│  Update when:                                            │
-│  • Starting task (create it first!)                      │
-│  • Completing a phase (change status)                    │
-│  • Making a major decision (add to Decisions table)     │
-│  • Encountering an error (add to Errors table)          │
-│  • Re-reading before decisions (automatic via hook)      │
-└─────────────────────────────────────────────────────────┘
+You can force a specific mode:
 
-┌─────────────────────────────────────────────────────────┐
-│  findings.md                                             │
-│  Update when:                                            │
-│  • Discovering something new (research, exploration)    │
-│  • After 2 view/browser/search operations (2-Action!)   │
-│  • Making a technical decision (with rationale)          │
-│  • Finding useful resources (URLs, docs)                 │
-│  • Viewing images/PDFs (capture as text immediately!)   │
-└─────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────┐
-│  progress.md                                             │
-│  Update when:                                            │
-│  • Starting a new phase (log start time)                 │
-│  • Completing a phase (log actions, files modified)      │
-│  • Running tests (add to Test Results table)            │
-│  • Encountering errors (add to Error Log with timestamp)│
-│  • Resuming after a break (update 5-Question Check)     │
-└─────────────────────────────────────────────────────────┘
+```bash
+/plan session Research topic          # Force session mode
+/plan feature Build full application  # Force feature mode
+/plan                                  # Auto-detect (default)
 ```
 
 ---
 
-## Common Mistakes to Avoid
+## When to Use Each Mode
 
-| Don't | Do Instead |
-|-------|------------|
-| Start work without creating `task_plan.md` | Always create the plan file first |
-| Forget to update `findings.md` after 2 browser operations | Set a reminder: "2 view/browser ops = update findings.md" |
-| Skip logging errors because you fixed them quickly | Log ALL errors, even ones you resolved immediately |
-| Repeat the same failed action | If something fails, log it and try a different approach |
-| Only update one file | The three files work together - update them as a set |
+| Use Session Mode for | Use Feature Mode for |
+|---------------------|---------------------|
+| Bug fixes | Full applications |
+| Single features | Platforms/systems |
+| Research tasks | Projects with 10+ features |
+| < 1 hour tasks | Multi-day projects |
+| Quick edits | Team projects |
 
 ---
 
-## Next Steps
+## Tips
 
-- See [examples/README.md](../examples/README.md) for complete walkthrough examples
-- See [workflow.md](workflow.md) for the visual workflow diagram
-- See [troubleshooting.md](troubleshooting.md) if you encounter issues
+1. **Let /plan decide** — It's usually right
+2. **You can switch modes** — If a task grows, suggest switching to feature mode
+3. **Always commit** — Feature mode commits after each feature
+4. **Update as you go** — Keep planning files current
+
+---
+
+## Need More Detail?
+
+- [Long-Running Projects](long-running.md) — Feature mode deep dive
+- [Installation](installation.md) — Setup instructions

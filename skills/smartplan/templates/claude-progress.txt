@@ -1,0 +1,21 @@
+# Claude Progress Log
+# This file tracks work done across multiple agent sessions
+
+## Session History
+| Date | Session ID | Features Completed | Notes |
+|------|------------|-------------------|-------|
+| YYYY-MM-DD | session-001 | feature-001 | Initial implementation |
+
+## Current Focus
+- Working on: feature-001
+- Next up: feature-002
+
+## Feature Completion Summary
+| Feature ID | Description | Completed | Date |
+|------------|-------------|-----------|------|
+| feature-001 | Description | No | - |
+
+## Notes
+- Use this file to track progress across sessions
+- Update after each feature completion
+- Include session IDs for traceability
